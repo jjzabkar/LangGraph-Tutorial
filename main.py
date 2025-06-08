@@ -9,7 +9,8 @@ from typing_extensions import TypedDict
 load_dotenv()
 
 llm = init_chat_model(
-    "anthropic:claude-3-5-sonnet-latest"
+    "ollama:deepseek-r1"
+    # "anthropic:claude-3-5-sonnet-latest"
 )
 
 
@@ -29,14 +30,13 @@ def classify_message(state: State):
     last_message = state["messages"][-1]
     classifier_llm = llm.with_structured_output(MessageClassifier)
 
+    classification_prompt = """Classify the user message as either:
+    - 'emotional': if it asks for emotional support, therapy, deals with feelings, or personal problems
+    - 'logical': if it asks for facts, information, logical analysis, or practical solutions
+    """
+
     result = classifier_llm.invoke([
-        {
-            "role": "system",
-            "content": """Classify the user message as either:
-            - 'emotional': if it asks for emotional support, therapy, deals with feelings, or personal problems
-            - 'logical': if it asks for facts, information, logical analysis, or practical solutions
-            """
-        },
+        {"role": "system", "content": classification_prompt},
         {"role": "user", "content": last_message.content}
     ])
     return {"message_type": result.message_type}
@@ -110,7 +110,7 @@ graph_builder.add_edge("logical", END)
 graph = graph_builder.compile()
 
 
-def run_chatbot():
+def run_chatbot_syncrhronous():
     state = {"messages": [], "message_type": None}
 
     while True:
@@ -129,6 +129,17 @@ def run_chatbot():
             last_message = state["messages"][-1]
             print(f"Assistant: {last_message.content}")
 
+def run_chatbot_streaming():
+    inputs = {"messages": [], "message_type": None}
+    while True:
+        user_input = input("Message: ")
+        if user_input == "exit" or user_input == "q":
+            print("Bye")
+            break
+        inputs['messages'].append(user_input)
+        # https://langchain-ai.lang.chat/langgraph/how-tos/streaming/#streaming-api
+        for chunk in graph.stream(inputs, stream_mode="messages"):
+            print(chunk[0].content, end="", flush=True)
 
 if __name__ == "__main__":
-    run_chatbot()
+    run_chatbot_streaming()

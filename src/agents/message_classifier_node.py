@@ -7,6 +7,7 @@ def message_classifier_node(state: State):
     classifier_llm = llm.with_structured_output(MessageClassifier)
 
     classification_prompt = """Classify the user message as either:
+    - 'music': if it as for music, a song, pertains to music, rhythm, tone, or music-related topics
     - 'emotional': if it asks for emotional support, therapy, deals with feelings, or personal problems
     - 'logical': if it asks for facts, information, logical analysis, or practical solutions
     """

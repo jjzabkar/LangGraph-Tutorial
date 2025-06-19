@@ -3,9 +3,11 @@ import uuid
 from dotenv import load_dotenv
 
 from src.agents.graph_builder import my_graph
+from src.util.mermaid import create_mermaid_diagram_files
 
 load_dotenv()
-
+create_mermaid_diagram_files()
+print('updated mermaid diagram')
 
 def run_chatbot_synchronous():
     state = {"messages": [], "message_type": None}

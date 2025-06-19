@@ -1,8 +1,12 @@
 # LangGraph-Tutorial
 
-https://www.youtube.com/watch?v=aywZrzNaKjs
+Creates a LangGraph agent.
 
-https://github.com/techwithtim/LangGraph-Tutorial
+Tutorial: https://www.youtube.com/watch?v=aywZrzNaKjs
+
+Forked base: https://github.com/techwithtim/LangGraph-Tutorial
+
+![Mermaid diagram](./src/util/mermaid.png)
 
 ## Setup
 

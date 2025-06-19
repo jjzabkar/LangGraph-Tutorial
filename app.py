@@ -2,10 +2,13 @@ from flask import Flask, Response, request, stream_with_context
 import json
 import uuid
 from src.agents.graph_builder import my_graph
+from src.util.mermaid import create_mermaid_diagram_files
 
 print('creating flask app')
 app = Flask(__name__)
 print('created flask app')
+create_mermaid_diagram_files()
+print('updated mermaid diagram')
 
 @app.route('/stream-chat', methods=['POST'])
 def stream_chat():

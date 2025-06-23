@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 from dotenv import load_dotenv
@@ -6,8 +7,12 @@ from src.agents.graph_builder import my_graph
 from src.util.mermaid import create_mermaid_diagram_files
 
 load_dotenv()
+logger = logging.getLogger(__name__)
+logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO)
+
 create_mermaid_diagram_files()
-print('updated mermaid diagram')
+logger.info('updated mermaid diagram')
 
 def run_chatbot_synchronous():
     state = {"messages": [], "message_type": None}
@@ -15,7 +20,7 @@ def run_chatbot_synchronous():
     while True:
         user_input = input("Message: ")
         if user_input == "exit":
-            print("Bye")
+            logger.info("Bye")
             break
 
         state["messages"] = state.get("messages", []) + [
@@ -26,7 +31,7 @@ def run_chatbot_synchronous():
 
         if state.get("messages") and len(state["messages"]) > 0:
             last_message = state["messages"][-1]
-            print(f"Assistant: {last_message.content}")
+            logger.info(f"Assistant: {last_message.content}")
 
 def run_chatbot_streaming():
     session_id = uuid.uuid4()
@@ -34,9 +39,9 @@ def run_chatbot_streaming():
 
     inputs = {"messages": [], "message_type": None}
     while True:
-        user_input = input("Message: ")
+        user_input = input("\n🎯🎯Message: ")
         if user_input == "exit" or user_input == "q":
-            print("Bye")
+            logger.info("Bye")
             break
         inputs['messages'].append(user_input)
         # https://langchain-ai.lang.chat/langgraph/how-tos/streaming/#streaming-api

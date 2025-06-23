@@ -11,7 +11,12 @@ dependencies = [
     "ipykernel>=6.29.5",
     "langchain-google-genai>=2.1.5",
     "langchain-google-vertexai>=2.0.24",
+    "langchain-postgres>=0.0.14",
     "langchain[anthropic,ollama]>=0.3.24",
     "langgraph>=0.3.34",
+    "psycopg-binary>=3.2.9",
+    "psycopg2-binary>=2.9.10",
     "python-dotenv>=1.1.0",
+    "requests>=2.32.3",
+    "vanna>=0.7.9",
 ]

@@ -12,8 +12,9 @@ class MessageClassifier(BaseModel):
     message_type: Literal[
         "emotional",
         "logical",
-        "music"
+        "music",
+        "soccer"
     ] = Field(
         ...,
-        description="Classify if the message requires a musical, emotional (therapist), or logical response."
+        description="Classify if the message requires a musical, emotional (therapist), soccer, or logical response."
     )
